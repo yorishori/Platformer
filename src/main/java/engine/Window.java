@@ -68,7 +68,7 @@ public class Window {
     
     // to actually put up the window with the GLFW Libraries
     public void run(){
-        System.out.println("Hello Java Libraries "+Version.getVersion()+"!");
+        System.out.println("Java Libraries v."+Version.getVersion()+"!");
         
         inti();
         loop();
