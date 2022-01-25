@@ -151,7 +151,6 @@ public class Window {
                         
             glfwSwapBuffers(glfwWindow);
             
-            System.out.println("FPS: " + (1.0f/dt));
             // Time it took the loop to execute
             endTime = Time.getTime();
             dt = endTime - beginTime;
