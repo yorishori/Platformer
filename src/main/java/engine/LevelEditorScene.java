@@ -19,10 +19,10 @@ public class LevelEditorScene extends Scene{
     private int vertexID, fragmentID, shaderProgram;
     private float[] vertexArray = {
             // position                  color
-             0.0f, 200.0f,0.0f,         1.0f, 0.0f, 0.0f, 0.0f,     0, 1, // Top Left
+             0.0f, 200.0f,0.0f,         1.0f, 0.0f, 0.0f, 1.0f,     0, 1, // Top Left
             200.0f, 200.0f,0.0f,         0.0f, 1.0f, 0.0f, 0.0f,    1, 1, // Top right
              0.0f,  0.0f,0.0f,         0.0f, 0.0f, 1.0f, 0.0f,      0, 0, // Bottom left
-            200.0f,  0.0f,0.0f,         0.0f, 0.0f, 0.0f, 0.0f,     1, 0, // Bottom right
+            200.0f,  0.0f,0.0f,         0.0f, 0.0f, 0.0f, 1.0f,     1, 0, // Bottom right
     };
     // IMPORTANT: Must be in counter-clockwise order
     private int elementArray[] = {
@@ -52,7 +52,7 @@ public class LevelEditorScene extends Scene{
         // Use shader class to initialize settings
         defaultShader = new Shader("assets/shaders/default.glsl");
         defaultShader.compile();
-        this.texture = new Texture("assets/images/blue.png");
+        this.texture = new Texture("assets/images/test4.png");
 
         // =============================================================
         // Generate VAO, VBO, and EBO buffer objects and send them to GL
@@ -94,6 +94,8 @@ public class LevelEditorScene extends Scene{
     }
     @Override
     public void update(float dt) {
+        // Change square position
+
         defaultShader.use();
 
         // Upload texture
@@ -120,5 +122,6 @@ public class LevelEditorScene extends Scene{
         glBindVertexArray(0);
 
         defaultShader.detach();
+        texture.unbind();
     }
 }
