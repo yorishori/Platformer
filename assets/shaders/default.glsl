@@ -20,7 +20,7 @@ void main(){
 #type fragment
 #version 330 core
 
-uniform sampler2D TEX_SAMPLER;
+uniform sampler2D tex;
 
 in vec4 fColor;
 in vec2 fTexCoords;
@@ -28,5 +28,5 @@ in vec2 fTexCoords;
 out vec4 color;
 
 void main(){
-    color = texture(TEX_SAMPLER, fTexCoords);
+    color = texture(tex, fTexCoords);
 }
