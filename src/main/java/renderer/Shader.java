@@ -15,16 +15,16 @@ import static org.lwjgl.opengl.GL20.glGetProgramInfoLog;
 public class Shader {
     // ***ATTRIBUTES***
     private int shaderProgramID;
+    private boolean beingUsed = false;
+
     private String vertexSrc;
     private String fragmentSrc;
     private String filepath;
 
-    private boolean beingUsed = false;
-
     // ***CONSTRUCTOR***
-    public Shader(String filepath) {
+    public Shader(String f) {
         // Download the shader source to a couple of Strings
-        this.filepath = filepath;
+        this.filepath = f;
         try{
             // Read shader source code and copy it to src string
             String src = new String(Files.readAllBytes(Paths.get(filepath)));
@@ -66,10 +66,10 @@ public class Shader {
     // ***METHODS***
     // Compile the vertex and fragment shaders
     public void compile(){
-        int vertexID, fragmentID;
         // =================================
         // Compiling and linking the shaders
         // =================================
+        int vertexID, fragmentID;
 
         // First load and compile vertex shaders
         vertexID = glCreateShader(GL_VERTEX_SHADER);
@@ -135,20 +135,20 @@ public class Shader {
     }
 
     // Upload a 4x4 matrix to the shader
-    public void uploadMat4f(String varName, Matrix4f mat){
+    public void uploadMat4f(String varName, Matrix4f mat4){
         int varLocation = glGetUniformLocation(shaderProgramID, varName);
         use();
         FloatBuffer matBuffer = BufferUtils.createFloatBuffer(16);
-        mat.get(matBuffer);
+        mat4.get(matBuffer);
         glUniformMatrix4fv(varLocation, false, matBuffer);
     }
 
     // Upload a 3x3 matrix to the shader
-    public void uploadMat3f(String varName, Matrix3f mat){
+    public void uploadMat3f(String varName, Matrix3f mat3){
         int varLocation = glGetUniformLocation(shaderProgramID, varName);
         use();
         FloatBuffer matBuffer = BufferUtils.createFloatBuffer(9);
-        mat.get(matBuffer);
+        mat3.get(matBuffer);
         glUniformMatrix3fv(varLocation, false, matBuffer);
     }
 
