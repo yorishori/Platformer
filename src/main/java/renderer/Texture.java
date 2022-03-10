@@ -6,15 +6,20 @@ import java.nio.ByteBuffer;
 import java.nio.IntBuffer;
 
 import static org.lwjgl.opengl.GL11.*;
-import static org.lwjgl.stb.STBImage.stbi_image_free;
-import static org.lwjgl.stb.STBImage.stbi_load;
+import static org.lwjgl.stb.STBImage.*;
 
 public class Texture {
-    private String filepath;
-    private int texID;
+    // ***ATTRIBUTES***
+    private final String filepath;
+    private final int texID;
 
-    public Texture(String filepath) {
-        this.filepath = filepath;
+    // ***CONSTRUCTOR***
+    /**
+     * Generates a texture from an image to use in the GL interface.
+     * @param f filepath to the texture image
+     */
+    public Texture(String f) {
+        this.filepath = f;
 
         // Generate texture on GPU
         texID = glGenTextures();
@@ -48,13 +53,22 @@ public class Texture {
             assert false : "Error: (Texture) Could not load image '" + filepath + "'";
         }
 
+        // Important to free the memory since stbi is C compiled code, and it's not managed by java's garbage collector.
         stbi_image_free(image);
     }
 
+    // ***METHODS***
+
+    /**
+     * Binds the created texture to the GPU
+     */
     public void bind() {
         glBindTexture(GL_TEXTURE_2D, texID);
     }
 
+    /**
+     * Unbinds the texture from the GPU
+     */
     public void unbind() {
         glBindTexture(GL_TEXTURE_2D, 0);
     }

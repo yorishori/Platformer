@@ -1,8 +1,9 @@
 package engine;
 
+import components.FontRenderer;
+import components.SpriteRenderer;
 import org.joml.Vector2f;
 import org.lwjgl.BufferUtils;
-import org.lwjgl.opengl.GL20;
 import renderer.Shader;
 import renderer.Texture;
 import util.Time;
@@ -14,8 +15,8 @@ import static org.lwjgl.opengl.GL20.*;
 import static org.lwjgl.opengl.GL30.*;
 
 public class LevelEditorScene extends Scene {
-
-    private int vertexID, fragmentID, shaderProgram;
+    // ***ATTRIBUTES***
+    private int vertexID, fragmentID, shaderProgram;    // Locations for each of the shaders' programs
 
     private float[] vertexArray = {
             // position               // color                  // UV Coordinates
@@ -28,28 +29,44 @@ public class LevelEditorScene extends Scene {
     // IMPORTANT: Must be in counter-clockwise order
     private int[] elementArray = {
             /*
-                    x        x
-                    x        x
+                    1        2
+                    3        0
              */
-            2, 1, 0, // Top right triangle
-            0, 1, 3 // bottom left triangle
+            0,2,1, // Top right triangle
+            1,3,0 // bottom left triangle
     };
 
     private int vaoID, vboID, eboID;
 
     private Shader defaultShader;
-    private Texture testTexture;
+    private Texture texture;
 
+    //Testing
+    private GameObject testObj;
+    private boolean firstTime = true;
+
+    // ***CONSTRUCTOR***
     public LevelEditorScene() {
 
     }
 
+    // ***METHODS***
     @Override
     public void init() {
+        //Testing
+        System.out.println("Creating test object");
+        // Create game objetct
+        this.testObj = new GameObject("test object");
+        // Add
+        this.testObj.addComponent(new SpriteRenderer());
+        this.testObj.addComponent(new FontRenderer());
+        this.addGameObjectToScene(this.testObj);
+
+
         this.camera = new Camera(new Vector2f(-200, -300));
         defaultShader = new Shader("assets/shaders/default.glsl");
         defaultShader.compile();
-        this.testTexture = new Texture("assets/images/testImage.png");
+        this.texture = new Texture("assets/images/testimage.png");
 
         // ============================================================
         // Generate VAO, VBO, and EBO buffer objects, and send to GPU
@@ -74,7 +91,7 @@ public class LevelEditorScene extends Scene {
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, eboID);
         glBufferData(GL_ELEMENT_ARRAY_BUFFER, elementBuffer, GL_STATIC_DRAW);
 
-        // Add the vertex attribute pointers
+        // Upload the vertex attribute pointers
         int positionsSize = 3;
         int colorSize = 4;
         int uvSize = 2;
@@ -91,15 +108,13 @@ public class LevelEditorScene extends Scene {
 
     @Override
     public void update(float dt) {
-//        camera.position.x -= dt * 50.0f;
-//        camera.position.y -= dt * 20.0f;
-
+        //  Use the shader program
         defaultShader.use();
 
         // Upload texture to shader
-        defaultShader.uploadTexture("TEX_SAMPLER", 0);
+        defaultShader.uploadTexture("tex", 0);
         glActiveTexture(GL_TEXTURE0);
-        testTexture.bind();
+        texture.bind();
 
         defaultShader.uploadMat4f("uProjection", camera.getProjectionMatrix());
         defaultShader.uploadMat4f("uView", camera.getViewMatrix());
@@ -120,5 +135,16 @@ public class LevelEditorScene extends Scene {
         glBindVertexArray(0);
 
         defaultShader.detach();
+
+        //Testing
+        if(firstTime) {
+            GameObject go = new GameObject("Test 2");
+            go.addComponent(new SpriteRenderer());
+            this.addGameObjectToScene(go);
+            firstTime = false;
+        }
+        for(GameObject go: this.gameObjects){
+            go.update(dt);
+        }
     }
 }

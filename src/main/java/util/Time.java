@@ -4,8 +4,11 @@ package util;
 public class Time {
     // Time when the app started
     public static float timeStarted = System.nanoTime();
-    
-    // get the time elpased in seconds since the game started
+
+    /**
+     * Get the time elapsed since the first call to the class
+     * @return time in seconds (in float format)
+     */
     public static float getTime(){
         return (float)((System.nanoTime()-timeStarted)* 1E-9);
     }

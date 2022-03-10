@@ -3,7 +3,6 @@ package renderer;
 import org.joml.*;
 import org.lwjgl.BufferUtils;
 
-import javax.print.DocFlavor;
 import java.io.IOException;
 import java.nio.FloatBuffer;
 import java.nio.file.Files;
@@ -11,10 +10,9 @@ import java.nio.file.Paths;
 
 import static org.lwjgl.opengl.GL11.GL_FALSE;
 import static org.lwjgl.opengl.GL20.*;
-import static org.lwjgl.opengl.GL20.glGetShaderInfoLog;
 
 public class Shader {
-
+    // ***ATTRIBUTES***
     private int shaderProgramID;
     private boolean beingUsed = false;
 
@@ -22,8 +20,13 @@ public class Shader {
     private String fragmentSource;
     private String filepath;
 
-    public Shader(String filepath) {
-        this.filepath = filepath;
+    // ***CONSTRUCTOR***
+    /**
+     * Builds and parses the shader program. Configured for vertex and fragment programs.
+     * @param f filepath to the .glsl program
+     */
+    public Shader(String f) {
+        this.filepath = f;
         try {
             String source = new String(Files.readAllBytes(Paths.get(filepath)));
             String[] splitString = source.split("(#type)( )+([a-zA-Z]+)");
@@ -59,6 +62,10 @@ public class Shader {
         }
     }
 
+    // ***METHODS***
+    /**
+     * Compliles and links the shader programs (vertex and fragment).
+     */
     public void compile() {
         // ============================================================
         // Compile and link shaders
@@ -111,6 +118,9 @@ public class Shader {
         }
     }
 
+    /**
+     * Tells the GL interface to use the compiled and linked program.
+     */
     public void use() {
         if (!beingUsed) {
             // Bind shader program
@@ -119,11 +129,15 @@ public class Shader {
         }
     }
 
+    /**
+     * Detaches the program from the GL interface.
+     */
     public void detach() {
         glUseProgram(0);
         beingUsed = false;
     }
 
+    // Methods to upload the different types of variables to the shader program, once it's compiled and in use.
     public void uploadMat4f(String varName, Matrix4f mat4) {
         int varLocation = glGetUniformLocation(shaderProgramID, varName);
         use();

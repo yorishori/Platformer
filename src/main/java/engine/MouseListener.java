@@ -5,17 +5,18 @@ import static org.lwjgl.glfw.GLFW.GLFW_RELEASE;
 
 
 public class MouseListener {
-    // ***ATTRIBUTE***
+    // ***ATTRIBUTES***
     private double scrollX, scrollY;
     private double xPos, yPos, lastX, lastY;
-    private boolean mouseButtonPress[] = new boolean[3];
+    private boolean mouseButtonPress[] = new boolean[3];    // May be greater depending on the mouse
     private boolean isDragging;
-    //  only one listener object
-    private static MouseListener instance;
+
+    private static MouseListener instance;                  //  Singleton class variable
     
     
     // ***CONSTRUCTOR***
     private MouseListener(){
+        // Callibrate everything to 0
         this.scrollX = 0.0;
         this.scrollY = 0.0;
         this.xPos = 0.0;
@@ -25,16 +26,26 @@ public class MouseListener {
     }
     
     // ***METHODS***
-    //  get the listener object
+
+    /**
+     * Returns the static mouse listener object. If it doesn't exist, it will be created.
+     * @return mouse listener
+     */
     public static MouseListener get(){
-        if(MouseListener.instance==null)
+        if(MouseListener.instance==null) {
             MouseListener.instance = new MouseListener();
-        
+        }
         return MouseListener.instance;
     }
-    
-    
-    // cursor position callback function
+
+
+    /**
+     *  Mouse position listener callback function for use in "glfwSetCursorPosCallback()".
+     *  Sets the position of the mouse and the dragging functionality.
+     * @param window
+     * @param xpos
+     * @param ypos
+     */
     public static void mousePosCallback(long window, double xpos, double ypos){
         // Set current position to las position
         get().lastX = get().xPos;
@@ -48,8 +59,15 @@ public class MouseListener {
         // and mouse is moving (ie. this function is called)
         get().isDragging = get().mouseButtonPress[0]||get().mouseButtonPress[1]||get().mouseButtonPress[2];
     }
-    
-    // mouse buttons callback function
+
+    /**
+     * Mouse buttons listener callback function for use in "glfwSetMouseButtonCallback()".
+     * Sets/resets the mouse buttons
+     * @param window
+     * @param button
+     * @param action
+     * @param mods
+     */
     public static void mouseButtonCallback(long window, int button, int action, int mods){
         if(action == GLFW_PRESS){
             if(button < get().mouseButtonPress.length){
@@ -62,14 +80,22 @@ public class MouseListener {
             }
         }
     }
-    
-    // mouse scroll callback function
+
+    /**
+     * Mouse scroll listener callback function for use in "glfwSetScrollCallback()".
+     * Sets the position of the scroll.
+     * @param window
+     * @param xOffset
+     * @param yOffset
+     */
     public static void mouseScrollCallback(long window, double xOffset, double yOffset){
         get().scrollX = xOffset;
         get().scrollY = yOffset;
     }
-    
-    // end frame function
+
+    /**
+     * Resets mouse current position and updates its previous position.
+     */
     public static void endFrame(){
         get().scrollX = 0;
         get().scrollY = 0;
@@ -91,7 +117,7 @@ public class MouseListener {
         return (float)(get().lastY-get().yPos);
     }
     
-    // mouse scroll gettes
+    // mouse scroll getters
     public static float getScrollX(){
         return (float)get().scrollX;
     }
