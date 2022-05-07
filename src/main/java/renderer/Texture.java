@@ -8,6 +8,10 @@ import java.nio.IntBuffer;
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.stb.STBImage.*;
 
+
+/**
+ * Class to add textures to a game object.
+ */
 public class Texture {
     // ***ATTRIBUTES***
     private final String filepath;

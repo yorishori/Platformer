@@ -3,7 +3,10 @@ package engine;
 import static org.lwjgl.glfw.GLFW.GLFW_PRESS;
 import static org.lwjgl.glfw.GLFW.GLFW_RELEASE;
 
-
+/**
+ * Singleton method. Only one instance of the object in the game.
+ * Class that listens and interprets user mouse movements and buttons.
+ */
 public class MouseListener {
     // ***ATTRIBUTES***
     private double scrollX, scrollY;
@@ -16,7 +19,7 @@ public class MouseListener {
     
     // ***CONSTRUCTOR***
     private MouseListener(){
-        // Callibrate everything to 0
+        // Calibrate everything to 0
         this.scrollX = 0.0;
         this.scrollY = 0.0;
         this.xPos = 0.0;
@@ -26,7 +29,6 @@ public class MouseListener {
     }
     
     // ***METHODS***
-
     /**
      * Returns the static mouse listener object. If it doesn't exist, it will be created.
      * @return mouse listener

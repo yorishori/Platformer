@@ -4,6 +4,10 @@ import org.joml.Matrix4f;
 import org.joml.Vector2f;
 import org.joml.Vector3f;
 
+/**
+ * Class that determines the position of the camera in relative space.
+ * You can get the view matrix and projection matrix for input to the GLSL Shader program.
+ */
 public class Camera {
     // ***ATTRIBUTES***
     private Matrix4f projectionMatrix, viewMatrix;          //  Matrices  for the correct transformation of coordinate systems

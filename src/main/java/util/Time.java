@@ -1,6 +1,8 @@
 package util;
 
-
+/**
+ * Class that returns system time and lifetime of program.
+ */
 public class Time {
     // Time when the app started
     public static float timeStarted = System.nanoTime();

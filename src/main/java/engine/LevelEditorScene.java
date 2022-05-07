@@ -14,10 +14,11 @@ import java.nio.IntBuffer;
 import static org.lwjgl.opengl.GL20.*;
 import static org.lwjgl.opengl.GL30.*;
 
+/**
+ * Scene object for the Lever Editor
+ */
 public class LevelEditorScene extends Scene {
     // ***ATTRIBUTES***
-    private int vertexID, fragmentID, shaderProgram;    // Locations for each of the shaders' programs
-
     private float[] vertexArray = {
             // position               // color                  // UV Coordinates
             100f,   0f, 0.0f,       1.0f, 0.0f, 0.0f, 1.0f,     1, 1, // Bottom right 0
@@ -41,6 +42,7 @@ public class LevelEditorScene extends Scene {
     private Shader defaultShader;
     private Texture texture;
 
+    //TODO: Remove test code
     //Testing
     private GameObject testObj;
     private boolean firstTime = true;
@@ -51,11 +53,17 @@ public class LevelEditorScene extends Scene {
     }
 
     // ***METHODS***
+
+    /**
+     * Initialize and create game objects for the scene,
+     * load shaders and textures and upload drawings to OpenGL libraries.
+     */
     @Override
     public void init() {
+        //TODO: Remove test code
         //Testing
         System.out.println("Creating test object");
-        // Create game objetct
+        // Create game object
         this.testObj = new GameObject("test object");
         // Add
         this.testObj.addComponent(new SpriteRenderer());
@@ -63,10 +71,11 @@ public class LevelEditorScene extends Scene {
         this.addGameObjectToScene(this.testObj);
 
 
+        // Create camera, compile shaders and add textures
         this.camera = new Camera(new Vector2f(-200, -300));
         defaultShader = new Shader("assets/shaders/default.glsl");
         defaultShader.compile();
-        this.texture = new Texture("assets/images/testimage.png");
+        this.texture = new Texture("assets/images/kirby.png");
 
         // ============================================================
         // Generate VAO, VBO, and EBO buffer objects, and send to GPU
@@ -106,6 +115,11 @@ public class LevelEditorScene extends Scene {
         glEnableVertexAttribArray(2);
     }
 
+    /**
+     * Update game objects, shaders, textures and cameras,
+     * redraw shapes
+     * @param dt time differential
+     */
     @Override
     public void update(float dt) {
         //  Use the shader program
@@ -136,6 +150,7 @@ public class LevelEditorScene extends Scene {
 
         defaultShader.detach();
 
+        //TODO: Remove test code
         //Testing
         if(firstTime) {
             GameObject go = new GameObject("Test 2");

@@ -11,6 +11,9 @@ import java.nio.file.Paths;
 import static org.lwjgl.opengl.GL11.GL_FALSE;
 import static org.lwjgl.opengl.GL20.*;
 
+/**
+ * Class to implement and parse GLSL Shaders.
+ */
 public class Shader {
     // ***ATTRIBUTES***
     private int shaderProgramID;

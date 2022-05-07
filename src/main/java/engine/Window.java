@@ -10,6 +10,10 @@ import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.system.MemoryUtil.*;
 import util.Time;
 
+/**
+ * Singleton method. Only one instance of the object in the game.
+ *
+ */
 public class Window {
     // ***ATTRIBUTES***
     private int width, height;
@@ -25,7 +29,10 @@ public class Window {
     
     
     // ***CONSTRUCTOR***
-    //  private so that it can't be called outside of class
+
+    /**
+     * Private constructor. Run only once.
+     */
     private Window(){
         this.width = 1280;
         this.height = 720;
@@ -39,7 +46,11 @@ public class Window {
     
     
     // ***METHODS***
-    //  to change app scenes
+
+    /**
+     * Method to change game scenes.
+     * @param newScene number of the scene to change to
+     */
     public static void changeScene(int newScene){
         switch(newScene){
             case 0:
@@ -57,7 +68,11 @@ public class Window {
                 break;
         }
     }
-    // To get the window object
+
+    /**
+     * Get the Window object. Create it if it doesn't exist.
+     * @return
+     */
     public static Window get(){
         // Create a window object if it's not created(only in first call of function)
         if(Window.window == null){
@@ -67,8 +82,10 @@ public class Window {
         // Return the static window object
         return Window.window;
     }
-    
-    // to actually put up the window with the GLFW Libraries
+
+    /**
+     * Run the window object; initialize and loop.
+     */
     public void run(){
         System.out.println("Java Libraries v."+Version.getVersion()+"!");
         
@@ -83,7 +100,10 @@ public class Window {
         glfwTerminate();
         glfwSetErrorCallback(null).free();
     }
-    
+
+    /**
+     * Initialize the OpenGL libraries and create the window.
+     */
     public void inti(){
         // Setup an error callback
         GLFWErrorCallback.createPrint(System.err).set();
@@ -131,7 +151,10 @@ public class Window {
         
         Window.changeScene(0);
     }
-    
+
+    /**
+     * Loop to change frames of the game and update screen.
+     */
     public void loop(){
         float beginTime = Time.getTime();
         float endTime;

@@ -3,11 +3,14 @@ package engine;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Abstraction of the Scene object. Stores all the game objects of the scene.
+ */
 public abstract class Scene {
     // ***ATTRIBUTES***
     protected Camera camera;
     private boolean isRunning = false;
-    protected List<GameObject> gameObjects = new ArrayList<>();     // List of all gameobjects in scene
+    protected List<GameObject> gameObjects = new ArrayList<>();     // List of all game objects in scene
 
     // ***CONSTRUCTOR***
     public Scene(){
@@ -29,7 +32,7 @@ public abstract class Scene {
     }
 
     /**
-     * Method to initialize the scene. Overridable but not necessary.
+     * Method to initialize the scene. Optional. Must be overridden.
      */
     public void init(){
         
@@ -47,8 +50,8 @@ public abstract class Scene {
     }
 
     /**
-     * Oblighatory child method for updating the scene.
-     * @param dt time diferential
+     * Mandatory method for updating the scene.
+     * @param dt time differential
      */
     public abstract void update(float dt);
 }

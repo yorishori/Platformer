@@ -1,10 +1,13 @@
 package engine;
 
+import components.Component;
+
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Class that stores all the components for this game object.
+ * Class for the Game Object: middleman to initialize,
+ * start and point to all components in the game.
  */
 public class GameObject {
     private String name;
@@ -21,7 +24,7 @@ public class GameObject {
 
     /**
      * Gets the component from the list that matches the class.
-     * @param componentClass class of the object you want
+     * @param componentClass class of the object you want to get
      * @param <T> generic class abstraction
      * @return the object with the specified class, null if not found
      */
@@ -61,12 +64,12 @@ public class GameObject {
      */
     public void addComponent(Component c){
         this.components.add(c);
-        // Assign the component's game object to this
+        // Assign the component's game object
         c.gameObject = this;
     }
 
     /**
-     * Starts all the components in the class
+     * Starts all the components of the game object
      */
     public void start(){
         for(int i=0; i<components.size(); i++){
@@ -74,7 +77,7 @@ public class GameObject {
         }
     }
     /**
-     * Updates all components of this game object.
+     * Updates all components of the game object.
      * @param dt differential time
      */
     public void update(float dt){

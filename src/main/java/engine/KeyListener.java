@@ -3,6 +3,9 @@ package engine;
 import static org.lwjgl.glfw.GLFW.GLFW_PRESS;
 import static org.lwjgl.glfw.GLFW.GLFW_RELEASE;
 
+/**
+ * Class that listens and interprets user key pressings.
+ */
 public class KeyListener {
     // ***ATTRIBUTES***
     private boolean keyPressed[] = new boolean[350];    //  Array representing all keys (pressed or not pressed)

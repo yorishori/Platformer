@@ -1,12 +1,17 @@
-package engine;
+package components;
 
+import engine.GameObject;
+
+/**
+ * Abstract class for all game components.
+ */
 public abstract class Component {
     // ***ATTRIBUTES***
     public GameObject gameObject = null;        // GameObject it belongs to. Default to null.
 
     // ***METHODS***
     /**
-     * Starts the component. Not obligatory.
+     * Starts the component. Optional. Must be overridden.
      */
     public void start(){
 
