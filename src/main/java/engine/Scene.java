@@ -1,5 +1,7 @@
 package engine;
 
+import renderer.Renderer;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,6 +10,7 @@ import java.util.List;
  */
 public abstract class Scene {
     // ***ATTRIBUTES***
+    protected Renderer renderer = new Renderer();
     protected Camera camera;
     private boolean isRunning = false;
     protected List<GameObject> gameObjects = new ArrayList<>();     // List of all game objects in scene
@@ -28,6 +31,7 @@ public abstract class Scene {
         }else{
             gameObjects.add(go);
             go.start();
+            this.renderer.add(go);
         }
     }
 
@@ -45,6 +49,7 @@ public abstract class Scene {
         // Iterate over all GOs and start them.
         for(GameObject go : gameObjects){
             go.start();
+            this.renderer.add(go);
         }
         isRunning = true;
     }
@@ -54,4 +59,8 @@ public abstract class Scene {
      * @param dt time differential
      */
     public abstract void update(float dt);
+
+    public Camera camera(){
+        return this.camera;
+    }
 }

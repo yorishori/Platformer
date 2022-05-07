@@ -83,6 +83,10 @@ public class Window {
         return Window.window;
     }
 
+    public static Scene getScene(){
+        return get().currentScene;
+    }
+
     /**
      * Run the window object; initialize and loop.
      */
@@ -178,6 +182,7 @@ public class Window {
             endTime = Time.getTime();
             dt = endTime - beginTime;
             beginTime = endTime;
+            System.out.println("FPS: " + 1.0f/dt);
         }
     }
 }

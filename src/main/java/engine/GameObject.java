@@ -1,6 +1,7 @@
 package engine;
 
 import components.Component;
+import org.joml.Vector2f;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,18 +11,35 @@ import java.util.List;
  * start and point to all components in the game.
  */
 public class GameObject {
+    // ***ATRIBUTES***
     private String name;
     private List<Component> components;
+    public Transform transform;
 
+    // ***CONSTRUCTORS***
     /**
-     * Initializes the game object name and components list.
-     * @param name
+     * Initializes the game object name, components list, and transform.
+     * @param name name of the object
      */
     public GameObject(String name){
         this.name = name;
         this.components = new ArrayList<>();
+        this.transform = new Transform();
     }
 
+    /**
+     * Initializes the game object name, components list, and transform.
+     * @param name name of the object
+     * @param transform position and scale of the object
+     */
+    public GameObject(String name, Transform transform){
+        this.name = name;
+        this.components = new ArrayList<>();
+        this.transform = transform;
+    }
+
+
+    // ***METHODS***
     /**
      * Gets the component from the list that matches the class.
      * @param componentClass class of the object you want to get
